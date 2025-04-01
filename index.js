@@ -9,8 +9,14 @@ const app = express();
 const conn = require("./db/conn");
 
 // Models
-const Tought = require("./models/Tought")
-const User = require("./models/User")
+const Tought = require("./models/Tought");
+const User = require("./models/User");
+
+// Import Routes
+const toughtsRoutes = require("./routes/toughtsRoutes");
+
+// Import Controller
+const ToughtsController = require("./controllers/ToughtController");
 
 // Template engine
 app.engine("handlebars", exphbs.engine());
@@ -54,12 +60,18 @@ app.use(express.static("public"));
 
 // Set session to res
 app.use((req, res, next) => {
-  if (req.session.userid) { // Se o usuário está logado, a sessão é enviada para a resposta
+  if (req.session.userid) {
+    // Se o usuário está logado, a sessão é enviada para a resposta
     res.locals.session = req.session;
   }
 
-  next()
+  next();
 });
+
+// Routes
+app.use("/toughts", toughtsRoutes);
+
+app.get("/", ToughtsController.showToughts)
 
 // Banco de dados ouvindo a porta 3000
 conn
