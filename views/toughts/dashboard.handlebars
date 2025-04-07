@@ -11,11 +11,15 @@
         <span class="actions">
           <a href="/" class="btn">Editar</a>
           <form action="/toughts/remove" method="POST">
-            <input type="hidden" name="id" value="{{this.id}}"/>
-            <input type="submit" value="Excluir" class="btn">
+            <input type="hidden" name="id" value="{{this.id}}" />
+            <input type="submit" value="Excluir" class="btn" />
           </form>
         </span>
       </li>
     {{/each}}
   </ul>
+  {{#if emptyToughts}}
+    <p>Ainda não há nenhum pensamento seu, comece a criar
+      <a href="/toughts/add">por aqui!</a></p>
+  {{/if}}
 </div>
